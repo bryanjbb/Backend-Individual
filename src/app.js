@@ -9,6 +9,7 @@ import rutasDetallesVentas from "./routes/detalles_ventas.routes.js";
 import rutasEmpleados from "./routes/empleados_routes.js";
 import rutasDetallesCompras from "./routes/detalles_compras.routes.js"
 import rutasCompras from "./routes/compras.routes.js"
+
 const app = express();
 
 // Habilitar CORS para cualquier origen

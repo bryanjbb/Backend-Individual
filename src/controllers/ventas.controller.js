@@ -79,10 +79,9 @@ export const registrarVenta = async (req, res) => {
   const { id_cliente, id_empleado, fecha_venta, total_venta, detalles } = req.body;
 
   try {
-    const fechaVentaFormateada = new Date(fecha_venta).toISOString().slice(0, 19).replace('T', ' '); // Convierte a 'YYYY-MM-DD HH:mm:ss'
     const [ventaResult] = await pool.query(
       'INSERT INTO Ventas (id_cliente, id_empleado, fecha_venta, total_venta) VALUES (?, ?, ?, ?)',
-      [id_cliente, id_empleado, fechaVentaFormateada , total_venta]
+      [id_cliente, id_empleado, fecha_venta , total_venta]
     );
 
     const id_venta = ventaResult.insertId;
@@ -106,17 +105,17 @@ export const registrarVenta = async (req, res) => {
 
 // Actualizar una venta con sus detalles
 export const actualizarVenta = async (req, res) => {
+  try {
   const { id_venta } = req.params;
   const { id_cliente, id_empleado, fecha_venta, total_venta, detalles } = req.body;
 
-  try {
-    // Formatear la fecha al formato MySQL
-    const fechaVentaFormateada = new Date(fecha_venta).toISOString().slice(0, 19).replace('T', ' ');
+          // Obtener la fecha y hora actual en formato 'YYYY-MM-DD HH:mm:ss'
+    const nuevaFechaVenta = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-    // Actualizar la venta
+     // Actualizar la venta con la nueva fecha
     const [ventaResult] = await pool.query(
       'UPDATE Ventas SET id_cliente = ?, id_empleado = ?, fecha_venta = ?, total_venta = ? WHERE id_venta = ?',
-      [id_cliente, id_empleado, fechaVentaFormateada, total_venta, id_venta]
+      [id_cliente, id_empleado, nuevaFechaVenta, total_venta, id_venta]
     );
 
     if (ventaResult.affectedRows === 0) {
@@ -153,9 +152,9 @@ export const actualizarVenta = async (req, res) => {
     }
 
     res.json({ mensaje: 'Venta actualizada correctamente' });
-  } catch (error) {
+} catch (error) {
     res.status(500).json({ mensaje: 'Error al actualizar la venta', error: error.message });
-  }
+}
 };
 
 

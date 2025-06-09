@@ -1,7 +1,6 @@
 import { pool } from '../db.js';
 
 // Obtener todos los productos
-// Obtener todos los productos
 export const obtenerProductos = async (req, res) => {
   try {
     const [result] = await pool.query(`
@@ -28,8 +27,6 @@ export const obtenerProductos = async (req, res) => {
     });
   }
 };
-
-
 
 // Registrar un nuevo producto
 export const registrarProducto = async (req, res) => {
