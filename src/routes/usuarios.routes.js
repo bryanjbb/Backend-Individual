@@ -13,3 +13,6 @@ router.get('/usuario/:user', obtenerUsuario);
 router.post('/verificar', verificarUsuario);
 
 export default router;
+
+
+         
